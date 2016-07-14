@@ -1,7 +1,7 @@
 'use strict';
 
 var max = 100;
-var guessCount = 0;
+var guessCount;
 var target;
 
 function setTarget() {
@@ -19,10 +19,11 @@ function newGame() {
     $('#guessList').html('');
     $('#userGuess').val('');
     $('#feedback').html('Make your Guess!');
+    guessCount = 0;
     setCounter();
 }
 
-function guessMessage(guess) {
+function getFeedback(guess) {
 
     if (guess == target) {
         return "That's it!  Nice Job";
@@ -35,8 +36,8 @@ function guessMessage(guess) {
             { diff: 8, msg: 'hot' }, 
             { diff: 16, msg: 'warm' }, 
             { diff: 24, msg: 'lukewarm' }, 
-            { diff: 40, msg: 'a tad chilly' }, 
-            { diff: 60, msg: 'cold' }, 
+            { diff: 32, msg: 'a tad chilly' }, 
+            { diff: 50, msg: 'cold' }, 
             { diff: 80, msg: 'frigid' } 
             ];
 
@@ -57,7 +58,7 @@ function handleGuess(guess) {
     $('#guessList').append('<li>'+guess+'</li>');
 
     // let the user know how they did
-    $('#feedback').html(guessMessage(guess));
+    $('#feedback').html(getFeedback(guess));
 }
 
 function validateGuess(guess) {
