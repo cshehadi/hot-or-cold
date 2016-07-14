@@ -62,9 +62,18 @@ function handleGuess(guess) {
 }
 
 function validateGuess(guess) {
+    var error = '';
+    // check for bad input
     if (isNaN(guess) || guess < 1 || guess > 100) {
-        return 'Please enter a number between 1 and 100';
+        error = 'Please enter a number between 1 and 100';
     }
+    // make sure they haven't guessed the same number twice
+    $('#guessList').find('li').each(function() {
+        if (guess == parseInt($(this).html())) {
+            error = "You've already guessed that number - try something else!";
+        }
+    });
+    return error;
 }
 
 function displayError(error) {
@@ -94,6 +103,7 @@ $(document).ready(function(){
     $("#guessButton").click(function(){
         var guess = parseInt($('#userGuess').val());
         var error = validateGuess(guess);
+
         if (!error) {
             handleGuess(guess);
         } else {
